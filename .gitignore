@@ -1,0 +1,6 @@
+template.sh
+backend/.env
+backend/app/__pycache__/*
+backend/*.py[cod]
+backend/*$py.class
+backend/*.__pycache__
