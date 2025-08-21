@@ -36,7 +36,6 @@ class Settings:
             "\n"
             "{context}"
     )
-    
     # Chat Settings
     CHAT_MODEL: str = "gemini-1.5-flash"
     MAX_CONTEXT_LENGTH: int = 3

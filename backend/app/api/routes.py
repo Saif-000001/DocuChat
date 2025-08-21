@@ -3,14 +3,12 @@ from ..models.chat import ChatRequest, ChatResponse
 from ..services.chatbot import MedicalChatbot
 
 router = APIRouter()
-
 chatbot = MedicalChatbot()
 
 @router.post("/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
     if not request.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
-    
     return chatbot.get_answer(request.message)
 
 @router.post("/initialize")
