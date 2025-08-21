@@ -1,6 +1,18 @@
+# Environment files
+.env
+.venv/
+
+# Python cache
+*__pycache__/
+__pycache__/*
+*.py[cod]
+
+# Build / packaging
+setup.py
+medical_chatbot.egg-info/
+data/
+
+# Shell scripts
 template.sh
-backend/.env
-backend/app/__pycache__/*
-backend/*.py[cod]
-backend/*$py.class
-backend/*.__pycache__
+
+
