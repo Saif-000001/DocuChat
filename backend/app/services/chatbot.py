@@ -13,32 +13,32 @@ from ..utils.documents import load_pdf_documents, filter_document_metadata, spli
 
 class MedicalChatbot:
     def __init__(self):
-        self.embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2')
+        self.embeddings = HuggingFaceEmbeddings(model_name=settings.EMBEDDING_MODEL)
         self.setup_pinecone()
         self.setup_rag_chain()
     
     def setup_pinecone(self):
         pc = Pinecone(api_key=settings.PINECONE_API_KEY)
 
-        if not pc.has_index(settings.INDEX_NAME):
+        if not pc.has_index(settings.PINECONE_INDEX_NAME):
             pc.create_index(
-                name=settings.INDEX_NAME,
-                dimension=384,
+                name=settings.PINECONE_INDEX_NAME,
+                dimension=settings.EMBEDDING_DIMENSION,
                 metric="cosine",
                 spec=ServerlessSpec(cloud="aws", region="us-east-1"),
             )
         
         self.docsearch = PineconeVectorStore.from_existing_index(
-            index_name=settings.INDEX_NAME,
+            index_name=settings.PINECONE_INDEX_NAME,
             embedding=self.embeddings
         )
     
     def setup_rag_chain(self):
 
-        system_prompt = setting.PROMPT
-        retriever = self.docsearch.as_retriever(search_type="similarity", search_kwargs={"k": 3})
+        system_prompt = settings.PROMPT
+        retriever = self.docsearch.as_retriever(search_type="similarity", search_kwargs={"k": settings.MAX_CONTEXT_LENGTH})
 
-        chat_model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+        chat_model = ChatGoogleGenerativeAI(model=settings.CHAT_MODEL, temperature=settings.TEMPERATURE)
 
         prompt = ChatPromptTemplate.from_messages([
             ("system", system_prompt),
@@ -48,14 +48,14 @@ class MedicalChatbot:
         question_answer_chain = create_stuff_documents_chain(chat_model, prompt)
         self.rag_chain = create_retrieval_chain(retriever, question_answer_chain)
     
-    def initialize_vector_store(self, data_path: str = "data/"):
+    def initialize_vector_store(self, data_path: str = settings.PDF_DATA_PATH):
         documents = load_pdf_documents(data_path)
         filtered_docs = filter_document_metadata(documents)
         text_chunks = split_documents(filtered_docs)
 
         PineconeVectorStore.from_documents(
             documents=text_chunks,
-            index_name=settings.INDEX_NAME,
+            index_name=settings.PINECONE_INDEX_NAME,
             embedding=self.embeddings,
         )
     

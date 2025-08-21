@@ -3,7 +3,9 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 from typing import List
 
-def load_pdf_documents(data_path: str = "data/") -> List[Document]:
+from ..core.config import settings
+
+def load_pdf_documents(data_path: str = settings.PDF_DATA_PATH) -> List[Document]:
     loader = DirectoryLoader(
         data_path,
         glob="*.pdf",
@@ -22,7 +24,7 @@ def filter_document_metadata(docs: List[Document]) -> List[Document]:
 
 def split_documents(documents: List[Document]) -> List[Document]:
     text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=20
+        chunk_size=settings.CHUNK_SIZE,
+        chunk_overlap=settings.CHUNK_OVERLAP
     )
     return text_splitter.split_documents(documents)
