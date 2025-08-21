@@ -15,4 +15,7 @@ data/
 # Shell scripts
 template.sh
 
+# docker
+.dockerignore
+
 
