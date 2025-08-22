@@ -12,8 +12,9 @@ class Settings:
         
     # CORS (Cross-Origin Resource Sharing)
     ALLOWED_ORIGINS: List[str] = [
-        "http://localhost:3000",   # React frontend 
-        "http://localhost:8000"    # FastAPI docs 
+        "http://localhost:3000",   # React CRA
+        "http://localhost:5173",   # React + Vite
+        "http://localhost:8000"    # FastAPI docs
     ]
     
     # External API Keys (loaded from .env)
