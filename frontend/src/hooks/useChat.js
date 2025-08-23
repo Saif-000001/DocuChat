@@ -5,14 +5,12 @@ export function useChat() {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Hello! I'm your medical assistant. How can I assist you today?",
-      sender: 'bot',
       timestamp: new Date()
     }
   ]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [inputMessage, setInputMessage] = useState(''); // track input
+  const [inputMessage, setInputMessage] = useState('');
 
   const sendMessage = async (messageText) => {
     if (!messageText.trim() || isLoading) return;
@@ -27,7 +25,7 @@ export function useChat() {
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
     setError('');
-    setInputMessage(''); // clear input after send
+    setInputMessage('');
 
     try {
       const response = await fetch(`${API_BASE_URL}/chat`, {

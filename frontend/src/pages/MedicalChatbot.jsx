@@ -1,4 +1,5 @@
-import { AlertCircle, Bot } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
+import img from "../assets/img.png"
 import Header from '../components/Header';
 import ChatMessage from '../components/ChatMessage';
 import MessageInput from '../components/MessageInput';
@@ -10,7 +11,9 @@ import { useFormatTime } from '../hooks/useFormatTime';
 
 const MedicalChatbot = () => {
   const { messages, isLoading, error, inputMessage, setInputMessage, sendMessage, handleKeyPress} = useChat();
-  const { showEmojiPicker, toggleEmojiPicker, handleEmojiSelect } = useEmoji();
+  const { showEmojiPicker, toggleEmojiPicker, pickerRef, handleEmojiSelect } = useEmoji((emoji) => {
+    setInputMessage(prev => prev + emoji);
+  });
   const messagesEndRef = useScroll(messages);
   const formatTime = useFormatTime();
 
@@ -28,16 +31,36 @@ const MedicalChatbot = () => {
       </div>
     )}
 
-    <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
-      {messages.map((msg) => (
-        <ChatMessage key={msg.id} message={msg} formatTime={formatTime} />
-      ))}
-
+<div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-900">
+  {messages.map((msg) =>
+    msg.id === 1 ? (
+      <div key={msg.id} className="text-center text-gray-400 text-sm">
+        {formatTime(msg.timestamp)}
+      </div>
+    ) : (
+      <ChatMessage
+        key={msg.id}
+        message={msg}
+        formatTime={formatTime}
+      />
+    )
+  )}
       {isLoading && (
-        <div className="flex items-center space-x-2 text-gray-500">
-          <Bot className="w-5 h-5 animate-pulse" />
-          <p className="text-sm">Thinking...</p>
-        </div>
+<div className="flex items-center space-x-2">
+  {/* Bot avatar */}
+  <img 
+    src={img}
+    alt="Bot" 
+    className="w-8 h-8 rounded-full object-cover" 
+  />
+
+  {/* Chat bubble with animated dots */}
+  <div className="bg-gray-800 text-white px-4 py-2 rounded-bl-none flex items-center space-x-1">
+    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
+    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.2s]"></span>
+    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.4s]"></span>
+  </div>
+</div>
       )}
       <div ref={messagesEndRef} />
     </div>
@@ -50,6 +73,7 @@ const MedicalChatbot = () => {
       handleKeyPress={handleKeyPress}
       showEmojiPicker={showEmojiPicker}
       setShowEmojiPicker={toggleEmojiPicker}
+      pickerRef={pickerRef}
       handleEmojiSelect ={handleEmojiSelect}
     />
   </div>
