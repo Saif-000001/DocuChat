@@ -1,83 +1,96 @@
 import { AlertCircle } from 'lucide-react';
-import img from "../assets/img.png"
+import img from "../assets/img.png";
 import Header from '../components/Header';
 import ChatMessage from '../components/ChatMessage';
 import MessageInput from '../components/MessageInput';
-
 import { useChat } from '../hooks/useChat';
 import { useEmoji } from '../hooks/useEmoji';
 import { useScroll } from '../hooks/useScroll';
 import { useFormatTime } from '../hooks/useFormatTime';
-
+/**
+ * MedicalChatbot Component
+ * ------------------------
+ * Main chat interface for the AI-powered medical assistant.
+ * Features:
+ *  - Header with bot avatar and title
+ *  - Scrollable chat messages (user & bot)
+ *  - Emoji picker integration
+ *  - Message input with send button
+ *  - Error handling and bot typing animation
+ */
 const MedicalChatbot = () => {
-  const { messages, isLoading, error, inputMessage, setInputMessage, sendMessage, handleKeyPress} = useChat();
+  // Custom hook to manage chat state and API interactions
+  const { messages, isLoading, error, inputMessage, setInputMessage, sendMessage, handleKeyPress } = useChat();
+  // Custom hook to manage emoji picker state
   const { showEmojiPicker, toggleEmojiPicker, pickerRef, handleEmojiSelect } = useEmoji((emoji) => {
-    setInputMessage(prev => prev + emoji);
+    setInputMessage(prev => prev + emoji); // Append selected emoji to input
   });
+  // Hook to auto-scroll to the latest message
   const messagesEndRef = useScroll(messages);
+  // Hook to format timestamps in HH:MM format
   const formatTime = useFormatTime();
-
   return (
     <div className="flex flex-col h-screen relative">
-    {/* Background (Radial Grid) */}
-    <div className="absolute top-0 left-0 z-[-1] h-full w-full bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]" />
-    
-    <Header />
-
-    {error && (
-      <div className="bg-gray-800 border-l-4 border-red-400 p-4 m-4 flex">
-        <AlertCircle className="w-5 h-5 text-red-400" />
-        <p className="ml-3 text-sm text-red-700">{error}</p>
-      </div>
-    )}
-
-<div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-900">
-  {messages.map((msg) =>
-    msg.id === 1 ? (
-      <div key={msg.id} className="text-center text-gray-400 text-sm">
-        {formatTime(msg.timestamp)}
-      </div>
-    ) : (
-      <ChatMessage
-        key={msg.id}
-        message={msg}
-        formatTime={formatTime}
-      />
-    )
-  )}
-      {isLoading && (
-<div className="flex items-center space-x-2">
-  {/* Bot avatar */}
-  <img 
-    src={img}
-    alt="Bot" 
-    className="w-8 h-8 rounded-full object-cover" 
-  />
-
-  {/* Chat bubble with animated dots */}
-  <div className="bg-gray-800 text-white px-4 py-2 rounded-bl-none flex items-center space-x-1">
-    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
-    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.2s]"></span>
-    <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.4s]"></span>
-  </div>
-</div>
+      {/* Background: Radial grid pattern */}
+      <div className="absolute top-0 left-0 z-[-1] h-full w-full bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]" />
+      {/* Header with bot avatar and title */}
+      <Header />
+      {/* Error message */}
+      {error && (
+        <div className="bg-gray-800 border-l-4 border-red-400 p-4 m-4 flex">
+          <AlertCircle className="w-5 h-5 text-red-400" />
+          <p className="ml-3 text-sm text-red-700">{error}</p>
+        </div>
       )}
-      <div ref={messagesEndRef} />
+      {/* Chat messages container */}
+      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-gray-900">
+        {messages.map((msg) =>
+          // Special rendering for initial timestamp-only message
+          msg.id === 1 ? (
+            <div key={msg.id} className="text-center text-gray-400 text-sm">
+              {formatTime(msg.timestamp)}
+            </div>
+          ) : (
+            <ChatMessage
+              key={msg.id}
+              message={msg}
+              formatTime={formatTime}
+            />
+          )
+        )}
+        {/* Bot typing indicator */}
+        {isLoading && (
+          <div className="flex items-center space-x-2">
+            {/* Bot avatar */}
+            <img 
+              src={img}
+              alt="Bot" 
+              className="w-8 h-8 rounded-full object-cover" 
+            />
+            {/* Chat bubble with animated dots */}
+            <div className="bg-gray-800 text-white px-4 py-2 rounded-bl-none flex items-center space-x-1">
+              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></span>
+              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.2s]"></span>
+              <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:-0.4s]"></span>
+            </div>
+          </div>
+        )}
+        {/* Invisible element to scroll to */}
+        <div ref={messagesEndRef} />
+      </div>
+      {/* Message input with send button and emoji picker */}
+      <MessageInput
+        inputMessage={inputMessage}
+        setInputMessage={setInputMessage}
+        sendMessage={() => sendMessage(inputMessage)}
+        isLoading={isLoading}
+        handleKeyPress={handleKeyPress}
+        showEmojiPicker={showEmojiPicker}
+        setShowEmojiPicker={toggleEmojiPicker}
+        pickerRef={pickerRef}
+        handleEmojiSelect={handleEmojiSelect}
+      />
     </div>
-
-    <MessageInput
-      inputMessage={inputMessage}
-      setInputMessage={setInputMessage}
-      sendMessage={() => sendMessage(inputMessage)}
-      isLoading={isLoading}
-      handleKeyPress={handleKeyPress}
-      showEmojiPicker={showEmojiPicker}
-      setShowEmojiPicker={toggleEmojiPicker}
-      pickerRef={pickerRef}
-      handleEmojiSelect ={handleEmojiSelect}
-    />
-  </div>
   );
 };
-
 export default MedicalChatbot;
