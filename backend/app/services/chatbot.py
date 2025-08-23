@@ -111,7 +111,7 @@ class MedicalChatbot:
             # Wrap response in ChatResponse dataclass
             return ChatResponse(
                 answer=response["answer"],
-                source_documents=source_docs
+                # source_documents=source_docs
             )
         except Exception as e:
             # Handle unexpected errors gracefully

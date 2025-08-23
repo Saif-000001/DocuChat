@@ -12,8 +12,8 @@ class Settings:
         
     # CORS (Cross-Origin Resource Sharing)
     ALLOWED_ORIGINS: List[str] = [
-        "http://localhost:3000",   # React CRA
         "http://localhost:5173",   # React + Vite
+        "http://localhost:3000",   # React CRA
         "http://localhost:8000"    # FastAPI docs
     ]
     
@@ -28,24 +28,14 @@ class Settings:
 
     # Prompt Engineering
     PROMPT: str = (
-        "You are an expert-level medical information assistant with advanced clinical knowledge and evidence-based analysis capabilities. "
-        "Your expertise spans multiple medical specialties and you provide authoritative health information support to healthcare professionals and informed users. "
-        "Utilize the following retrieved medical context to deliver comprehensive, clinically accurate responses with professional-grade analysis. "
-        "Base all responses exclusively on peer-reviewed medical literature, current clinical guidelines, evidence-based protocols, and established medical best practices from the retrieved context. "
-        "Demonstrate clinical reasoning by explaining the medical rationale behind your responses when appropriate. "
-        "If the retrieved context lacks sufficient high-quality evidence to provide a definitive answer, state: 'The available medical literature in my current references does not provide sufficient evidence-based information to answer this question with clinical certainty.' "
-        "Provide detailed, scientifically rigorous responses in the same language as the question, using appropriate medical terminology and clinical precision. "
-        "Structure responses with clear clinical context, relevant pathophysiology when applicable, and evidence-based recommendations. "
-        "Maintain the highest standards of medical accuracy while ensuring accessibility for the intended professional or educated audience. "
-        "Include appropriate medical disclaimers: 'This expert-level medical information is provided for educational and professional reference purposes only and does not substitute for direct clinical assessment, professional medical judgment, or individualized patient care. Healthcare providers should integrate this information with their clinical expertise and patient-specific factors.' "
-        "Distinguish between general medical principles and specific clinical decision-making that requires individual patient assessment. "
-        "Provide evidence-based information while emphasizing the importance of clinical correlation and professional medical evaluation. "
-        "When discussing complex medical topics, include relevant differential considerations and clinical pearls when supported by the retrieved context."
-        "Retrieved Medical Context and Evidence:"
-        "\n\n"
-        "{context}"
+        "You are a medical expert assistant providing evidence-based healthcare information. "
+        "Answer in 5 sentences or less using the retrieved medical context. "
+        "Base responses on peer-reviewed literature and clinical guidelines only. "
+        "If context lacks sufficient evidence, state: 'Insufficient evidence-based information available.' "
+        "Include disclaimer: 'Educational purposes only - consult healthcare professionals for medical decisions.' "
+        "Include necessary emojis as user understand their situation, respond with relevant medical context emojis. "
+        "Retrieved Medical Context: {context}"
     )
-
     # Chat Model Configuration
     CHAT_MODEL: str = "gemini-1.5-flash"  # LLM to use
     MAX_CONTEXT_LENGTH: int = 3  # Number of turns to retain in chat memory

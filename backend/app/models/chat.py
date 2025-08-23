@@ -8,4 +8,4 @@ class ChatRequest(BaseModel):
 # For output message
 class ChatResponse(BaseModel):
     answer: str
-    source_documents: Optional[List[str]] = None
+    # source_documents: Optional[List[str]] = None
