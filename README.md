@@ -319,7 +319,7 @@ npm start
 # or
 yarn start
 ```
-##### Linve: https://medicalchatbotapp.netlify.app/
+##### Live UI: https://medicalchatbotapp.netlify.app/
 
 #### Initialize Vector Database
 
