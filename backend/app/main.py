@@ -1,18 +1,29 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from .api.routes import router as api_router
+from .core.config import settings
 
-# Here’s a small RAG example
-from langchain.chat_models import ChatOpenAI
-from langchain.chains import RetrievalQA
-from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
+# Initialize FastAPI application
+app = FastAPI(
+    title=settings.PROJECT_NAME,  
+    version=settings.VERSION      
+)
+# Apply CORS middleware (Cross-Origin Resource Sharing)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.ALLOWED_ORIGINS,  # List of allowed origins from settings
+    allow_credentials=True,                  # Allow cookies and authentication headers
+    allow_methods=["*"],                      # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],                      # Allow all custom headers
+)
+# Register API routes from the routes module
+app.include_router(api_router)
 
-# Load embeddings & create vector store
-embeddings = OpenAIEmbeddings()
-db = FAISS.from_texts(["LangChain makes LLM apps modular."], embeddings)
-
-# Build retriever + LLM chain
-retriever = db.as_retriever()
-llm = ChatOpenAI(model_name="gpt-3.5-turbo")
-qa = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
-
-# Ask a question
-print(qa.run("What is LangChain?"))
+# Root endpoint for health check / quick status
+@app.get("/")
+async def root():
+    """
+    Basic health check endpoint.
+    Useful for verifying that the API is running.
+    """
+    return {"message": "Medical Chatbot API is running"}
