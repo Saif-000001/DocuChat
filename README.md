@@ -127,7 +127,7 @@ The Medical Chatbot is an intelligent conversational AI system designed to provi
 - **HuggingFace Transformers**: Pre-trained models for embeddings
 - **Google Gemini**: Large language model for response generation
 - **PyPDF**: PDF document processing
-- **Python 3.13+**: Core programming language
+- **Python**: Core programming language
 
 ### Frontend
 - **React+vite**: Modern JavaScript library for building user interfaces
