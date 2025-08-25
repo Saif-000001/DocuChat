@@ -42,24 +42,12 @@ The Medical Chatbot is an intelligent conversational AI system designed to provi
 - **Professional UI**: Clean, responsive interface optimized for healthcare use cases
 
 ## Features
-
-### Core Features
 - **RAG-based Question Answering**: Retrieves relevant context from medical documents before generating responses
 - **PDF Document Processing**: Automatically processes and indexes medical literature and documents
 - **Vector Similarity Search**: Uses embeddings to find semantically similar content
 - **Real-time Chat Interface**: Interactive, responsive chat UI with typing indicators
 - **Error Handling**: Comprehensive error management with user-friendly messages
 
-### Safety & Reliability
-- **Medical Disclaimers**: Clear warnings about consulting healthcare professionals
-- **Response Limitations**: Configured to provide concise, focused answers
-- **Rate Limiting**: Protection against API abuse
-
-### User Experience
-- **Modern Design**: Clean, professional interface suitable for medical contexts
-- **Responsive Layout**: Works seamlessly across desktop and mobile devices
-- **Accessibility**: Built with accessibility best practices
-- **Fast Loading**: Optimized performance with lazy loading and efficient state management
 
 ## Architecture
 ``` text
