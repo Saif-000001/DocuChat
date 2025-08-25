@@ -7,9 +7,10 @@ A complete end-to-end Medical Chatbot powered by LLMs, LangChain, and Pinecone, 
 [![React](https://img.shields.io/badge/React-NodeJS-61DAFB.svg)](https://reactjs.org)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://docker.com)
 [![RAG](https://img.shields.io/badge/RAG-Enabled-7B61FF.svg)](https://www.pinecone.io/learn/retrieval-augmented-generation/)
+[![LangChain](https://img.shields.io/badge/LangChain-0.3.26-AA61FF.svg)](https://python.langchain.com/docs/introduction/)
 [![Embeddings](https://img.shields.io/badge/Embeddings-Sentence--BERT(HF)-FFB000.svg)](https://huggingface.co/blog/getting-started-with-embeddings)
 [![Vector%20Store](https://img.shields.io/badge/Vector%20Store-Pinecone-00A78E.svg)](https://www.pinecone.io/)
-[![LLM](https://img.shields.io/badge/LLM-Gemma-4285F4.svg)](https://aistudio.google.com/prompts/new_chat)
+[![LLM](https://img.shields.io/badge/LLM-Gemini-4285F4.svg)](https://aistudio.google.com/prompts/new_chat)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 
