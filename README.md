@@ -304,9 +304,9 @@ python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```bash
 # From frontend directory
 cd frontend
-npm start
+npm run medical_chatbot
 # or
-yarn start
+yarn run medical_chatbot
 ```
 ##### Live UI: https://medicalchatbotapp.netlify.app/
 
