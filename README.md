@@ -156,8 +156,8 @@ Before setting up the project, ensure you have:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Saif-000001/medical_chatbot.git
-cd medical_chatbot
+git clone https://github.com/Saif-000001/DocuChat.git
+cd DocuChat
 ```
 
 ### 2. Backend Setup
