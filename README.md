@@ -163,6 +163,9 @@ cd DocuChat
 ### 2. Backend Setup
 
 ```bash
+# Navigate to backend directory
+cd backend
+
 # Create virtual environment
 python -m venv .venv
 
